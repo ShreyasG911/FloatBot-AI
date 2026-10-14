@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FloatBot AI</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-card">
+    <header class="header">
+      <div class="logo-group">
+        <img src="icons/icon-48.png" alt="FloatBot AI Logo" class="logo-img" width="32" height="32" />
+        <div>
+          <h1 class="title">FloatBot AI</h1>
+          <span class="subtitle">Floating AI Assistant</span>
+        </div>
+      </div>
+      <span class="status-indicator">Always-on-Top</span>
+    </header>
+
+    <main class="content">
+      <p class="description">
+        Movable, resizable assistant that stays visible above <strong>VS Code</strong>, Chrome, and your workspace.
+      </p>
+
+      <div class="feature-box">
+        <div class="feature-item">
+          <span class="icon">🪟</span>
+          <span><strong>True Always-on-Top:</strong> Document PiP over all desktop apps</span>
+        </div>
+        <div class="feature-item">
+          <span class="icon">🖥️</span>
+          <span><strong>Screen Capture:</strong> Snap VS Code or desktop window with 1 click</span>
+        </div>
+        <div class="feature-item">
+          <span class="icon">📎</span>
+          <span><strong>Document Attachments:</strong> Attach PDF, code, or docs like ChatGPT</span>
+        </div>
+      </div>
+
+      <div class="action-buttons-stack">
+        <button id="btn-open-launcher" class="btn-primary">
+          <span>Launch Floating Assistant</span>
+          <span class="arrow">🚀</span>
+        </button>
+      </div>
+
+      <div id="status-message" class="status-message" style="display: none;"></div>
+    </main>
+
+    <footer class="footer">
+      <span>FloatBot AI • Document Picture-in-Picture</span>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

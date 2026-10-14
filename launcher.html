@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FloatBot AI</title>
+  <link rel="icon" type="image/png" href="icons/icon-32.png">
+  <link rel="stylesheet" href="launcher.css">
+</head>
+<body>
+  <div class="launcher-shell">
+    <!-- Anchor Control Dashboard (Companion Hub) -->
+    <div id="anchor-control-panel" class="anchor-panel" style="display: none;">
+      <div class="anchor-header">
+        <div class="brand">
+          <img src="icons/icon-48.png" alt="FloatBot AI Logo" class="brand-logo-img" width="36" height="36" />
+          <div>
+            <h2>FloatBot AI Companion Hub</h2>
+            <p class="brand-sub">Powering the always-on-top Picture-in-Picture assistant</p>
+          </div>
+        </div>
+        <div id="live-status-pill" class="live-status-pill">
+          <span class="pulse-dot"></span>
+          <span>FloatBot AI is Active</span>
+        </div>
+      </div>
+
+      <!-- Prominent Warning Notice -->
+      <div class="warning-banner-card">
+        <div class="warning-icon-col">⚠️</div>
+        <div class="warning-text-col">
+          <strong>Notice: Do NOT close this window!</strong>
+          <p>FloatBot AI is running actively above your desktop. Chromium requires this companion page to keep the floating bot alive. If you close this page, FloatBot AI will close.</p>
+          <span class="warning-sub-tip">💡 You can minimize this window or leave it behind your code editor.</span>
+        </div>
+      </div>
+
+      <!-- Feature Guide Section -->
+      <div class="feature-guide-section">
+        <h3>🚀 Working of FloatBot AI:</h3>
+        <div class="feature-guide-grid">
+          <div class="guide-card">
+            <span class="guide-card-icon">🪟</span>
+            <div class="guide-card-content">
+              <strong>True Always-on-Top</strong>
+              <p>Stays visible over VS Code, browsers, and all desktop apps (OS-level <code>WS_EX_TOPMOST</code>).</p>
+            </div>
+          </div>
+          <div class="guide-card">
+            <span class="guide-card-icon">🖥️</span>
+            <div class="guide-card-content">
+              <strong>1-Click Screen Capture</strong>
+              <p>Click <strong>Screen</strong> in the bot to snap VS Code or any window and send code directly to ChatGPT.</p>
+            </div>
+          </div>
+          <div class="guide-card">
+            <span class="guide-card-icon">📎</span>
+            <div class="guide-card-content">
+              <strong>Documents & Code Files</strong>
+              <p>Attach or drop PDFs, code, docs, and spreadsheets for instant AI analysis.</p>
+            </div>
+          </div>
+          <div class="guide-card">
+            <span class="guide-card-icon">⚡</span>
+            <div class="guide-card-content">
+              <strong>Minimize to Floating Circle</strong>
+              <p>Click <strong>─</strong> on the bot to shrink it into a tiny movable logo circle widget.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions Stack -->
+      <div class="anchor-actions-row">
+        <button id="btn-focus-floating-bot" class="btn-anchor-action primary" title="Bring the floating assistant to front">
+          <span>⚡ Focus Floating Bot</span>
+        </button>
+        <button id="btn-minimize-anchor-win" class="btn-anchor-action secondary" title="Minimize this companion window to taskbar">
+          <span>📥 Minimize to Background</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- The Floating Assistant Interface (Transferred into Document PiP window) -->
+    <div id="assistant-ui-root" class="floating-assistant">
+      <!-- Drag & Drop Overlay -->
+      <div id="drag-drop-overlay" class="drag-drop-overlay" style="display: none;">
+        <div class="drop-target-box">
+          <span class="drop-icon">📂</span>
+          <span class="drop-title">Drop documents or images here</span>
+          <span class="drop-sub">PDF, TXT, DOCX, Code, CSV, Images</span>
+        </div>
+      </div>
+
+      <!-- Minimized Floating Circle Widget (Click to restore full assistant) -->
+      <div id="minimized-circle-btn" class="minimized-circle-widget" style="display: none;" title="Open FloatBot AI">
+        <div class="circle-glow-ring"></div>
+        <div class="circle-inner-btn">
+          <img src="icons/icon-48.png" alt="FloatBot AI" class="circle-logo-img" width="36" height="36" />
+        </div>
+        <span class="circle-hover-badge">Open FloatBot AI</span>
+      </div>
+
+      <!-- 1. Header -->
+      <header class="pip-header">
+        <div class="pip-brand">
+          <img src="icons/icon-32.png" alt="FloatBot AI" class="pip-logo-img" width="18" height="18" />
+          <span class="brand-name">FloatBot AI</span>
+          <span class="brand-pill">Always-on-Top</span>
+        </div>
+
+        <div class="pip-controls">
+          <button id="btn-pip-popout" class="pip-tool-btn" title="Pop out into Always-on-Top PiP (over VS Code)" aria-label="Always-on-top PiP" style="display: none;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <rect x="11" y="9" width="9" height="7" rx="1" ry="1" fill="currentColor"></rect>
+            </svg>
+          </button>
+          <button id="btn-minimize-pip" class="pip-tool-btn" title="Minimize to Tiny Circle" aria-label="Minimize to circle">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="12" x2="20" y2="12"></line></svg>
+          </button>
+          <button id="btn-theme-toggle" class="pip-tool-btn" title="Switch to Light Mode" aria-label="Toggle theme">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+          <button id="btn-close-pip" class="pip-tool-btn close-btn" title="Close assistant" aria-label="Close">
+            <span>✕</span>
+          </button>
+        </div>
+      </header>
+
+
+      <!-- 2. Conversation Stream Area -->
+      <main id="chat-messages" class="chat-messages">
+        <!-- Welcome Card -->
+        <div class="welcome-card" id="welcome-card">
+          <div class="welcome-icon">👋</div>
+          <h3>Welcome to FloatBot AI</h3>
+          <p>Your interactive AI companion that stays on top while you code, study, and browse.</p>
+          <div class="quick-tips">
+            <div class="tip-item">
+              <span class="tip-icon">🪟</span>
+              <span>Stays visible even when switching to <strong>VS Code</strong>.</span>
+            </div>
+            <div class="tip-item">
+              <span class="tip-icon">🖥️</span>
+              <span>Click <strong>Screen</strong> to snap your code or any window.</span>
+            </div>
+            <div class="tip-item">
+              <span class="tip-icon">📎</span>
+              <span>Click <strong>Attach File</strong> or drop documents & code.</span>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Loading / Thinking Indicator -->
+      <div id="typing-indicator" class="typing-indicator" style="display: none;">
+        <div class="typing-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span class="typing-text">FloatBot AI is analyzing...</span>
+      </div>
+
+      <!-- 3. Attachment Staging Drawer (Visible when screenshot or document is attached) -->
+      <div id="attachment-staging" class="attachment-staging" style="display: none;">
+        <div class="staging-preview-box">
+          <div class="staging-img-container" id="staging-icon-wrapper">
+            <img id="staging-image" alt="Attachment preview" />
+            <div id="staging-doc-icon" class="staging-doc-icon" style="display: none;">📄</div>
+          </div>
+          <div class="staging-info">
+            <div class="staging-title-row">
+              <span id="staging-filename" class="staging-filename">document.pdf</span>
+              <span id="staging-badge" class="staging-badge">Document</span>
+            </div>
+            <div class="staging-actions">
+              <button id="btn-download-screenshot" class="staging-action-btn" title="Download file to PC">
+                <span>💾 Save</span>
+              </button>
+              <button id="btn-copy-screenshot" class="staging-action-btn" title="Copy to clipboard">
+                <span>📋 Copy</span>
+              </button>
+              <button id="btn-remove-screenshot" class="staging-action-btn remove" title="Remove attachment">
+                <span>✕ Remove</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Message Composer -->
+      <footer class="chat-composer" id="chat-composer">
+        <div class="composer-quick-bar">
+          <div class="quick-tools-left">
+            <button id="btn-capture-screen" class="tool-btn accent" title="Capture VS Code or desktop window">
+              <span class="tool-icon">🖥️</span>
+              <span class="tool-label">Screen</span>
+            </button>
+            <button id="btn-attach-doc" class="tool-btn" title="Attach document or file (PDF, TXT, DOCX, Code, CSV, etc.)">
+              <span class="tool-icon">📎</span>
+              <span class="tool-label">Attach File</span>
+            </button>
+            <input
+              type="file"
+              id="file-input-doc"
+              style="display: none;"
+              accept=".pdf,.doc,.docx,.txt,.csv,.json,.py,.js,.ts,.jsx,.tsx,.html,.css,.md,.xml,.yaml,.yml,.xlsx,.png,.jpg,.jpeg,.webp"
+            />
+            <button id="btn-chatgpt-handoff" class="tool-btn" title="Copy prompt & attachments, and open ChatGPT in tab">
+              <span class="tool-icon">🚀</span>
+              <span class="tool-label">ChatGPT</span>
+            </button>
+          </div>
+          <div class="quick-tools-right">
+            <button id="btn-clear-chat" class="tool-btn-icon" title="Clear chat history">
+              <span>🗑️</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <textarea
+            id="prompt-input"
+            rows="1"
+            placeholder="Ask a question or describe documents... (Enter to send, Shift+Enter for new line)"
+            aria-label="Ask a question"
+          ></textarea>
+          <button id="btn-send-message" class="btn-send" title="Send message" disabled>
+            <span>➤</span>
+          </button>
+        </div>
+      </footer>
+
+      <!-- Notification Toast -->
+      <div id="float-toast" class="float-toast" style="display: none;"></div>
+    </div>
+  </div>
+
+  <script src="launcher.js"></script>
+</body>
+</html>
