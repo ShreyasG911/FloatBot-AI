@@ -78,3 +78,12 @@ FloatBot AI operates on a **100% local architecture**:
 - **No external servers**: Your prompts and files never touch any intermediary servers.
 
 For full permission justifications and Chrome Web Store publishing metadata, see [CHROMEWEBSTORE.md](CHROMEWEBSTORE.md).
+
+---
+
+## ⚖️ Disclaimer & Compliance
+
+- **Independent Project**: FloatBot AI is an independent, open-source productivity extension and is **not affiliated with, associated with, authorized by, endorsed by, or in any way officially connected with OpenAI, Inc.** "ChatGPT" is a registered trademark of OpenAI, Inc.
+- **Client-Side Assistive Operation**: The content script acts purely as an assistive interface helper upon explicit user-initiated actions. It does not perform autonomous background crawling, mass data collection, or scraping.
+- **User Responsibility**: Users are responsible for their use of third-party websites and should ensure compliance with applicable terms of service.
+

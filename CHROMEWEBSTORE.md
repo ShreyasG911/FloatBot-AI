@@ -41,6 +41,9 @@ HOW TO USE IT:
 PRIVACY & SECURITY:
 FloatBot AI is 100% private. Your prompts, code, and files communicate strictly between your local browser and your authenticated ChatGPT session. No telemetry, no third-party servers, and no tracking.
 
+DISCLAIMER & COMPLIANCE:
+FloatBot AI is an independent open-source productivity tool and is not affiliated with, endorsed by, or sponsored by OpenAI, Inc. "ChatGPT" is a registered trademark of OpenAI. FloatBot AI operates purely as a local assistive interface on your device upon your explicit direction.
+
 SUPPORT:
 Questions, feedback, or bug reports? Reach out via our GitHub repository issues page.
 
@@ -95,6 +98,12 @@ English
 - **Personal Communications**: Transferred only between the user's browser and ChatGPT per user instruction; never stored or sent to any external server.
 - **User Activity / Analytics**: Zero tracking, zero telemetry, zero analytics scripts.
 - **Website Content**: Only reads responses from ChatGPT tabs to display them inside the floating assistant.
+
+### Transparency & Automation Model
+- **User-Directed Operation**: FloatBot AI never runs background bots, scrapers, or unsolicited automation. The content bridge (`chatgpt-bridge.js`) interacts with the webpage DOM only when the user explicitly triggers an action in the floating assistant.
+- **What Is Read**: The extension reads the text content of the active assistant response container via a standard `MutationObserver` exclusively to stream responses to the Document PiP window in real-time.
+- **What Is Written**: Inserts user-composed text into the prompt input box and dispatches simulated user input events to submit the message.
+- **Strictly Local**: All data transfer occurs exclusively within Chrome's local extension message bus (`chrome.runtime`). No data is ever transmitted to any third-party service, proxy, or server.
 
 ### Privacy Policy
 

@@ -1,7 +1,13 @@
 /**
- * FloatAI - ChatGPT Tab Bridge (Content Script)
- * Runs natively inside https://chatgpt.com.
- * Multi-selector input finder, resilient submit trigger, and real-time response streamer.
+ * FloatBot AI - ChatGPT Tab Content Bridge
+ * 
+ * ARCHITECTURE & DATA TRANSPARENCY NOTICE:
+ * - Scope: Acts strictly as a local client-side assistive helper on behalf of the user.
+ * - Triggers: Only executes upon explicit user input (sending messages or attaching media from the floating UI).
+ * - What it reads: Text of the latest assistant reply node via MutationObserver for streaming into Document PiP.
+ * - What it writes: Inserts user-provided prompt text into the active prompt input and stages user attachments.
+ * - Data Privacy: 100% local in-browser messaging (chrome.runtime). Zero telemetry, zero external tracking, zero third-party servers.
+ * - Compliance: Independent project. Not affiliated with, endorsed by, or sponsored by OpenAI.
  */
 
 (() => {
